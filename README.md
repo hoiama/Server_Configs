@@ -1,2 +1,2 @@
-# Server_Configs
-Servidor de Configuração de projetos
+# delivery-configs
+Arquivos de configuração do projeto Delivery
