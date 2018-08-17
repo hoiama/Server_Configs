@@ -1,40 +1,40 @@
 server:
-  port: 9092
+  port: 9092 #Porta do servidor de autenticação.
 
-eureka:
+eureka: #Configuração de registro no eureka.
   instance:
-    hostname: localhost
-    port: 9091
+    hostname: localhost #Host do eureka.
+    port: 9091 #Porta do eureka.
   client:
-    registerWithEureka: true
+    registerWithEureka: true #Irá registar no eureka.
     fetchRegistry: false
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
   server:
     wait-time-in-ms-when-sync-empty: 3000
 
-security:
-    oauth2:
-        client:
-            access-token-validity-seconds: 1800
-            authorized-grant-types: password,refresh_token
-            client-id: coderef
-            client-secret: $2a$10$p9Pk0fQNAQSesI4vuvKA0OZanDD2
-            resource-ids: resources
-            scope: read,write
+security: #Configuração de segurança do Servidor de Autenticação
+  oauth2:
+    client:
+      access-token-validity-seconds: 1800 #Duração em segundos do token.
+      authorized-grant-types: password,refresh_token #Password: usando uruário e senha | refresh_token: renovação de token existente.
+      client-id: coderef #Identificador unico usado pelo cliente para solicitar acesso
+      client-secret: $2a$10$p9Pk0fQNAQSesI4vuvKA0OZanDD2 #Senha usada junto com "client-id" como autenticação basica para obter o token.
+      resource-ids: resources #Identifica os recursos disponíveis.
+      scope: read,write #Escopo que o cliente tem acesso de ler, escrever, etc.
 
-spring:
-    datasource:
-        data: classpath:/sql/data.sql
-        driver-class-name: com.mysql.jdbc.Driver
-        password: '1234'
-        platform: mysql
-        schema: classpath:/sql/schema.sql
-        url: jdbc:mysql://localhost/oauth?verifyServerCertificate=false&useSSL=false&requireSSL=false
-        username: root
-    jpa:
-        database-platform: org.hibernate.dialect.MySQLDialect
-        generate-ddl: false
-        hibernate:
-            ddl-auto: none
-        show-sql: true
+spring: #Configuração do JPA para persistencia de dados usando Hibernate no banco H2.
+  datasource:
+    data: classpath:/sql/data.sql #Executa este arquivo na inicialização (Após 'schema") da aplicação do servidor de aplicação.
+    drive-class-name: org.h2.Driver #Drive do SGDB H2.
+    password: #Senha do banco de dadaos H2.
+    username: sa
+    platform: h2 #plataforma de persistencia
+    schema: classpath:/sql/schema.sql #Arquivo com estrutura do banco com tabelas e dados de seguraça.
+    url: jdbc:h2:mem:testdb #Url de acesso ao banco.
+  jpa:
+    database-plataform: org.hibernate.dialect.MySQLDialect #Classes com implementações que possibilitam geração de SQL para "Platform" definida, trazendo compatibilidade entre o JPA e o banco.
+    generate-ddl: false #Autogeração de tabelas do banco com base nas anotações JPA.
+    hibernate:
+      ddl-auto: false #Caso marcada como true devera ser informada a política de geração de bancos.
+      show-sql: true #Gera os logs do SQL executado pelo JPA
