@@ -16,21 +16,21 @@ eureka: #Configuração de registro no eureka.
 security: #Configuração de segurança do Servidor de Autenticação
   oauth2:
     client:
-      access-token-validity-seconds: 1800 #Duração em segundos do token.
-      authorized-grant-types: password,refresh_token #Password: usando uruário e senha | refresh_token: renovação de token existente.
       client-id: coderef #Identificador unico usado pelo cliente para solicitar acesso
+      authorized-grant-types: password,refresh_token #Password: usando uruário e senha | refresh_token: renovação de token existente.
+      access-token-validity-seconds: 1800 #Duração em segundos do token.
       client-secret: $2a$10$p9Pk0fQNAQSesI4vuvKA0OZanDD2 #Senha usada junto com "client-id" como autenticação basica para obter o token.
       resource-ids: resources #Identifica os recursos disponíveis.
       scope: read,write #Escopo que o cliente tem acesso de ler, escrever, etc.
 
 spring: #Configuração do JPA para persistencia de dados usando Hibernate no banco H2.
   datasource:
+    schema: classpath:/sql/schema.sql #Arquivo com estrutura do banco com tabelas e dados de seguraça.
     data: classpath:/sql/data.sql #Executa este arquivo na inicialização (Após 'schema") da aplicação do servidor de aplicação.
     drive-class-name: org.h2.Driver #Drive do SGDB H2.
     password: #Senha do banco de dadaos H2.
     username: sa
     platform: h2 #plataforma de persistencia
-    schema: classpath:/sql/schema.sql #Arquivo com estrutura do banco com tabelas e dados de seguraça.
     url: jdbc:h2:mem:testdb #Url de acesso ao banco.
   jpa:
     database-plataform: org.hibernate.dialect.MySQLDialect #Classes com implementações que possibilitam geração de SQL para "Platform" definida, trazendo compatibilidade entre o JPA e o banco.
